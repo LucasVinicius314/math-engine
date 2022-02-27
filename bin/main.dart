@@ -1,6 +1,6 @@
-import 'engine.dart';
-import 'expression.dart';
-import 'term.dart';
+import 'package:math_engine/engine.dart';
+import 'package:math_engine/expression.dart';
+import 'package:math_engine/term.dart';
 
 void main(final List<String> arguments) {
   final engine = Engine();
@@ -33,16 +33,30 @@ void main(final List<String> arguments) {
     coefficient: 4,
   );
 
+  final e = Term(
+    engine,
+    sign: Sign.pos,
+    value: 'x',
+    coefficient: 1,
+  );
+
   var exp = Expression(
     engine,
     terms: [
-      a,
-      Operation.mul,
-      b,
-      Operation.add,
-      c,
-      Operation.sub,
-      d,
+      if (false) ...[
+        a,
+        Operation.mul,
+        b,
+        Operation.add,
+        c,
+        Operation.sub,
+        d,
+      ],
+      if (true) ...[
+        // a,
+        // Operation.mul,
+        e,
+      ],
     ],
   );
 

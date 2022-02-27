@@ -49,11 +49,11 @@ class Term {
   String toString() {
     final localSign = sign;
     final localValue = value ?? '';
-    final localCoefficient = coefficient;
+    final localCoefficient =
+        coefficient.toString().replaceFirst(RegExp(r'.0+$'), '');
 
     final newSign = signToString[localSign];
 
-    return '$newSign$localCoefficient$localValue'
-        .replaceFirst(RegExp(r'.0+$'), '');
+    return '$newSign$localCoefficient$localValue';
   }
 }

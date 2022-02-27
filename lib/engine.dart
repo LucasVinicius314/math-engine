@@ -1,4 +1,4 @@
-import 'term.dart';
+import 'package:math_engine/term.dart';
 
 class Engine {
   final valueMap = <String, dynamic>{};

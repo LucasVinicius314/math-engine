@@ -1,5 +1,6 @@
+import 'package:math_engine/term.dart';
+
 import 'engine.dart';
-import 'term.dart';
 
 class Expression {
   final Engine engine;
