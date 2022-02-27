@@ -7,35 +7,30 @@ void main(final List<String> arguments) {
 
   final a = Term(
     engine,
-    sign: Sign.pos,
     value: null,
     coefficient: 1,
   );
 
   final b = Term(
     engine,
-    sign: Sign.pos,
     value: null,
     coefficient: 2,
   );
 
   final c = Term(
     engine,
-    sign: Sign.pos,
     value: null,
     coefficient: 3,
   );
 
   final d = Term(
     engine,
-    sign: Sign.pos,
     value: null,
     coefficient: 4,
   );
 
   final e = Term(
     engine,
-    sign: Sign.pos,
     value: 'x',
     coefficient: 1,
   );

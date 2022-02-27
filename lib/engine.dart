@@ -18,28 +18,24 @@ class Engine {
       case Operation.add:
         return Term(
           this,
-          sign: Sign.pos,
           value: null,
           coefficient: a.coefficient + b.coefficient,
         );
       case Operation.sub:
         return Term(
           this,
-          sign: Sign.pos,
           value: null,
           coefficient: a.coefficient - b.coefficient,
         );
       case Operation.mul:
         return Term(
           this,
-          sign: Sign.pos,
           value: null,
           coefficient: a.coefficient * b.coefficient,
         );
       case Operation.div:
         return Term(
           this,
-          sign: Sign.pos,
           value: null,
           coefficient: a.coefficient / b.coefficient,
         );

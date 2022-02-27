@@ -3,16 +3,19 @@ import 'engine.dart';
 class Term {
   final Engine engine;
 
-  final Sign sign;
+  // final Sign sign;
   final String? value;
   final double coefficient;
 
   Term(
     this.engine, {
-    required this.sign,
+    // required this.sign,
     required this.value,
     required this.coefficient,
   });
+
+  Sign get sign =>
+      coefficient.sign == -1 || coefficient.sign == -0 ? Sign.neg : Sign.pos;
 
   Term calculate() {
     print('calculating $this');
@@ -25,7 +28,6 @@ class Term {
     if (engineValue is num) {
       final out = Term(
         engine,
-        sign: sign,
         value: null,
         coefficient: localCoefficient * engineValue,
       );
@@ -34,7 +36,6 @@ class Term {
     } else if (engineValue is String) {
       final out = Term(
         engine,
-        sign: sign,
         value: engineValue,
         coefficient: localCoefficient,
       );
@@ -47,12 +48,14 @@ class Term {
 
   @override
   String toString() {
-    final localSign = sign;
     final localValue = value ?? '';
     final localCoefficient =
-        coefficient.toString().replaceFirst(RegExp(r'.0+$'), '');
+        (localValue != '' && (coefficient == 1 || coefficient == -1)
+                ? ''
+                : coefficient.toString().replaceFirst(RegExp(r'.0+$'), ''))
+            .replaceFirst(RegExp(r'^-'), '');
 
-    final newSign = signToString[localSign];
+    final newSign = coefficient == 0 ? '' : signToString[sign];
 
     return '$newSign$localCoefficient$localValue';
   }
