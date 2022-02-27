@@ -1,4 +1,5 @@
 import 'engine.dart';
+import 'expression.dart';
 import 'term.dart';
 
 void main(final List<String> arguments) {
@@ -6,55 +7,62 @@ void main(final List<String> arguments) {
 
   final a = Term(
     engine,
-    next: null,
+    sign: Sign.pos,
     value: null,
-    coefficient: 2,
-    operation: null,
+    coefficient: 1,
   );
 
   final b = Term(
     engine,
-    next: a,
+    sign: Sign.pos,
     value: null,
-    coefficient: 10,
-    operation: Operation.mul,
+    coefficient: 2,
   );
 
   final c = Term(
     engine,
-    next: b,
+    sign: Sign.pos,
     value: null,
-    coefficient: 5,
-    operation: Operation.mul,
+    coefficient: 3,
   );
 
-  // final a = Term(
-  //   engine,
-  //   next: null,
-  //   value: null,
-  //   coefficient: 13,
-  //   operation: null,
-  // );
+  final d = Term(
+    engine,
+    sign: Sign.pos,
+    value: null,
+    coefficient: 4,
+  );
 
-  // final b = Term(
-  //   engine,
-  //   next: a,
-  //   value: null,
-  //   coefficient: 10,
-  //   operation: Operation.sub,
-  // );
+  var exp = Expression(
+    engine,
+    terms: [
+      a,
+      Operation.mul,
+      b,
+      Operation.add,
+      c,
+      Operation.sub,
+      d,
+    ],
+  );
 
-  // final c = Term(
-  //   engine,
-  //   next: b,
-  //   value: null,
-  //   coefficient: 5,
-  //   operation: Operation.mul,
-  // );
+  print('=== expression');
 
-  print(c.toString());
+  print(exp);
 
-  final res = c.calculate();
+  while (true) {
+    final newExp = exp.calculate();
+
+    if (exp.toString() == newExp.toString()) {
+      break;
+    }
+
+    exp = newExp;
+  }
+
+  final res = exp.calculate();
+
+  print('=== res');
 
   print(res);
 }
