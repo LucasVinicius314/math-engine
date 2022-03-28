@@ -472,5 +472,73 @@ void main() {
 
       expect(expression.calculate().toString(), equals('8'));
     });
+
+    test('2x + 2x + 2x + 2x returns correctly', () {
+      final engine = Engine();
+
+      final a = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final b = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final c = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final d = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine,
+          terms: [a, Operation.add, b, Operation.add, c, Operation.add, d]);
+
+      expect(expression.calculate().toString(), equals('8x'));
+    });
+
+    test('2x + 2x + 2x + 2x, x = 2 returns correctly', () {
+      final engine = Engine();
+
+      engine.addToMap('x', 2);
+
+      final a = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final b = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final c = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final d = Term(
+        engine,
+        value: 'x',
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine,
+          terms: [a, Operation.add, b, Operation.add, c, Operation.add, d]);
+
+      expect(expression.calculate().toString(), equals('16'));
+    });
   });
 }
