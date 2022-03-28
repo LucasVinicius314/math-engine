@@ -17,74 +17,91 @@ class Engine {
     final newA = a.calculate();
     final newB = b.calculate();
 
+    final bothExponentsEqual = newA.exponent == newB.exponent;
+
+    final bothValuesEqual = newA.value == newB.value;
+    final bothValuesNull = newA.value == null && newB.value == null;
+    final bothValuesNotNull = newA.value != null && newB.value != null;
+    final aNullBNotNullValues = newA.value == null && newB.value != null;
+    final aNotNullBNullValues = newA.value != null && newB.value == null;
+
     switch (operation) {
       case Operation.add:
-        if (newA.value == newB.value) {
+        if (bothValuesEqual && bothExponentsEqual) {
           return Term(
             this,
             value: newA.value,
+            exponent: newA.exponent,
             coefficient: newA.coefficient + newB.coefficient,
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.sub:
-        if (newA.value == newB.value) {
+        if (bothValuesEqual && bothExponentsEqual) {
           return Term(
             this,
             value: newA.value,
+            exponent: newA.exponent,
             coefficient: newA.coefficient - newB.coefficient,
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.mul:
-        if (newA.value == null && newB.value == null) {
+        if (bothValuesNull && bothExponentsEqual) {
           return Term(
             this,
             value: null,
+            exponent: newA.exponent,
             coefficient: newA.coefficient * newB.coefficient,
           );
         }
 
-        if (newA.value == newB.value) {
+        if (bothValuesEqual && bothExponentsEqual) {
           return Term(
             this,
+            // TODO: fix, calculate new expression on exponent
             value: '${newA.value}²',
+            exponent: newA.exponent,
             coefficient: newA.coefficient * newB.coefficient,
           );
         }
 
-        if (newA.value != null && newB.value != null) {
+        if (bothValuesNotNull && bothExponentsEqual) {
           return Term(
             this,
             value: '${newA.value}${newB.value}',
+            exponent: newA.exponent,
             coefficient: newA.coefficient * newB.coefficient,
           );
         }
 
-        if (newA.value == null && newB.value != null) {
+        if (aNullBNotNullValues && bothExponentsEqual) {
           return Term(
             this,
             value: newB.value,
+            exponent: newA.exponent,
             coefficient: newA.coefficient * newB.coefficient,
           );
         }
 
-        if (newA.value != null && newB.value == null) {
+        if (aNotNullBNullValues && bothExponentsEqual) {
           return Term(
             this,
             value: newA.value,
+            exponent: newA.exponent,
             coefficient: newA.coefficient * newB.coefficient,
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.div:
-        if (newA.value == null && newB.value == null) {
+        if (bothValuesNull && bothExponentsEqual) {
           return Term(
             this,
             value: null,
+            exponent: newA.exponent,
             coefficient: newA.coefficient / newB.coefficient,
           );
         }

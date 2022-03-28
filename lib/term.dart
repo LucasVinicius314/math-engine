@@ -4,13 +4,28 @@ class Term {
   final Engine engine;
 
   final String? value;
+  final Term? exponent;
   final double coefficient;
 
   Term(
     this.engine, {
     required this.value,
+    required this.exponent,
     required this.coefficient,
   });
+
+  Term.identity(this.engine)
+      : value = null,
+        exponent = null,
+        coefficient = 1;
+
+  Term.constant(this.engine, this.coefficient)
+      : value = null,
+        exponent = null;
+
+  Term.variable(this.engine, this.value)
+      : exponent = null,
+        coefficient = 1;
 
   Sign get sign =>
       coefficient.sign == -1 || coefficient.sign == -0 ? Sign.neg : Sign.pos;
@@ -27,6 +42,7 @@ class Term {
       final out = Term(
         engine,
         value: null,
+        exponent: exponent,
         coefficient: localCoefficient * engineValue,
       );
 
@@ -35,6 +51,7 @@ class Term {
       final out = Term(
         engine,
         value: engineValue,
+        exponent: exponent,
         coefficient: localCoefficient,
       );
 

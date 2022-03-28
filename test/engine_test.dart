@@ -4,15 +4,93 @@ import 'package:math_engine/term.dart';
 import 'package:test/test.dart';
 
 void main() {
+  group('Core', () {
+    test('Identity', () {
+      final engine = Engine();
+
+      final term = Term.identity(engine);
+
+      expect(term.toString(), equals('1'));
+    });
+
+    test('Constant 0', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, 0);
+
+      expect(term.toString(), equals('0'));
+    });
+
+    test('Constant 1', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, 1);
+
+      expect(term.toString(), equals('1'));
+    });
+
+    test('Constant 2', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, 2);
+
+      expect(term.toString(), equals('2'));
+    });
+
+    test('Constant 99', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, 99);
+
+      expect(term.toString(), equals('99'));
+    });
+
+    test('Constant -0', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, -0);
+
+      expect(term.toString(), equals('0'));
+    });
+
+    test('Constant -1', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, -1);
+
+      expect(term.toString(), equals('-1'));
+    });
+
+    test('Constant -10', () {
+      final engine = Engine();
+
+      final term = Term.constant(engine, -10);
+
+      expect(term.toString(), equals('-10'));
+    });
+
+    test('Variable x', () {
+      final engine = Engine();
+
+      final term = Term.variable(engine, 'x');
+
+      expect(term.toString(), equals('x'));
+    });
+
+    test('Variable y', () {
+      final engine = Engine();
+
+      final term = Term.variable(engine, 'y');
+
+      expect(term.toString(), equals('y'));
+    });
+  });
+
   group('Term', () {
     test('1 returns correctly', () {
       final engine = Engine();
 
-      final term = Term(
-        engine,
-        value: null,
-        coefficient: 1,
-      );
+      final term = Term.constant(engine, 1);
 
       expect(term.toString(), equals('1'));
     });
@@ -20,11 +98,7 @@ void main() {
     test('10 returns correctly', () {
       final engine = Engine();
 
-      final term = Term(
-        engine,
-        value: null,
-        coefficient: 10,
-      );
+      final term = Term.constant(engine, 10);
 
       expect(term.toString(), equals('10'));
     });
@@ -32,11 +106,7 @@ void main() {
     test('-1 returns correctly', () {
       final engine = Engine();
 
-      final term = Term(
-        engine,
-        value: null,
-        coefficient: -1,
-      );
+      final term = Term.constant(engine, -1);
 
       expect(term.toString(), equals('-1'));
     });
@@ -47,6 +117,7 @@ void main() {
       final term = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 1,
       );
 
@@ -59,6 +130,7 @@ void main() {
       final term = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
@@ -71,6 +143,7 @@ void main() {
       final term = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: -1,
       );
 
@@ -83,6 +156,7 @@ void main() {
       final term = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: -2,
       );
 
@@ -94,17 +168,9 @@ void main() {
     test('2 + 2 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final a = Term.constant(engine, 2);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final b = Term.constant(engine, 2);
 
       final expression = Expression(engine, terms: [a, Operation.add, b]);
 
@@ -114,17 +180,9 @@ void main() {
     test('-2 + 2 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final a = Term.constant(engine, -2);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: -2,
-      );
+      final b = Term.constant(engine, 2);
 
       final expression = Expression(engine, terms: [a, Operation.add, b]);
 
@@ -134,17 +192,9 @@ void main() {
     test('3 * 3 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 3,
-      );
+      final a = Term.constant(engine, 3);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 3,
-      );
+      final b = Term.constant(engine, 3);
 
       final expression = Expression(engine, terms: [a, Operation.mul, b]);
 
@@ -154,17 +204,9 @@ void main() {
     test('-3 * -3 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: -3,
-      );
+      final a = Term.constant(engine, -3);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: -3,
-      );
+      final b = Term.constant(engine, -3);
 
       final expression = Expression(engine, terms: [a, Operation.mul, b]);
 
@@ -174,17 +216,9 @@ void main() {
     test('16 / 4 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 16,
-      );
+      final a = Term.constant(engine, 16);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 4,
-      );
+      final b = Term.constant(engine, 4);
 
       final expression = Expression(engine, terms: [a, Operation.div, b]);
 
@@ -194,17 +228,9 @@ void main() {
     test('16 / -4 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 16,
-      );
+      final a = Term.constant(engine, 16);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: -4,
-      );
+      final b = Term.constant(engine, -4);
 
       final expression = Expression(engine, terms: [a, Operation.div, b]);
 
@@ -214,21 +240,25 @@ void main() {
     test('-16 / 4 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: -16,
-      );
+      final a = Term.constant(engine, -16);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 4,
-      );
+      final b = Term.constant(engine, 4);
 
       final expression = Expression(engine, terms: [a, Operation.div, b]);
 
       expect(expression.calculate().toString(), equals('-4'));
+    });
+
+    test('-16 / -4 returns correctly', () {
+      final engine = Engine();
+
+      final a = Term.constant(engine, -16);
+
+      final b = Term.constant(engine, -4);
+
+      final expression = Expression(engine, terms: [a, Operation.div, b]);
+
+      expect(expression.calculate().toString(), equals('4'));
     });
 
     test('x, x = 10 returns correctly', () {
@@ -236,11 +266,7 @@ void main() {
 
       engine.addToMap('x', 10);
 
-      final a = Term(
-        engine,
-        value: 'x',
-        coefficient: 1,
-      );
+      final a = Term.variable(engine, 'x');
 
       final expression = Expression(engine, terms: [a]);
 
@@ -255,6 +281,7 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
@@ -272,12 +299,14 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final b = Term(
         engine,
         value: 'y',
+        exponent: null,
         coefficient: 3,
       );
 
@@ -295,12 +324,14 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 12,
       );
 
       final b = Term(
         engine,
         value: 'y',
+        exponent: null,
         coefficient: 3,
       );
 
@@ -312,17 +343,9 @@ void main() {
     test('x + x returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: 'x',
-        coefficient: 1,
-      );
+      final a = Term.variable(engine, 'x');
 
-      final b = Term(
-        engine,
-        value: 'x',
-        coefficient: 1,
-      );
+      final b = Term.variable(engine, 'x');
 
       final expression = Expression(engine, terms: [a, Operation.add, b]);
 
@@ -332,17 +355,9 @@ void main() {
     test('x - x returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: 'x',
-        coefficient: 1,
-      );
+      final a = Term.variable(engine, 'x');
 
-      final b = Term(
-        engine,
-        value: 'x',
-        coefficient: 1,
-      );
+      final b = Term.variable(engine, 'x');
 
       final expression = Expression(engine, terms: [a, Operation.sub, b]);
 
@@ -355,12 +370,14 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final b = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 3,
       );
 
@@ -375,12 +392,14 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 7,
       );
 
       final b = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
@@ -395,12 +414,14 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final b = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 3,
       );
 
@@ -414,23 +435,11 @@ void main() {
     test('2 + 2 + 2 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final a = Term.constant(engine, 2);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final b = Term.constant(engine, 2);
 
-      final c = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final c = Term.constant(engine, 2);
 
       final expression =
           Expression(engine, terms: [a, Operation.add, b, Operation.add, c]);
@@ -443,29 +452,13 @@ void main() {
     test('2 + 2 + 2 + 2 returns correctly', () {
       final engine = Engine();
 
-      final a = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final a = Term.constant(engine, 2);
 
-      final b = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final b = Term.constant(engine, 2);
 
-      final c = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final c = Term.constant(engine, 2);
 
-      final d = Term(
-        engine,
-        value: null,
-        coefficient: 2,
-      );
+      final d = Term.constant(engine, 2);
 
       final expression = Expression(engine,
           terms: [a, Operation.add, b, Operation.add, c, Operation.add, d]);
@@ -479,24 +472,28 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final b = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final c = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final d = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
@@ -514,24 +511,28 @@ void main() {
       final a = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final b = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final c = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 
       final d = Term(
         engine,
         value: 'x',
+        exponent: null,
         coefficient: 2,
       );
 

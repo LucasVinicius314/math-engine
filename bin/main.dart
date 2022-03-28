@@ -5,35 +5,15 @@ import 'package:math_engine/term.dart';
 void main(final List<String> arguments) {
   final engine = Engine();
 
-  final a = Term(
-    engine,
-    value: null,
-    coefficient: 1,
-  );
+  final a = Term.constant(engine, 1);
 
-  final b = Term(
-    engine,
-    value: null,
-    coefficient: 2,
-  );
+  final b = Term.constant(engine, 2);
 
-  final c = Term(
-    engine,
-    value: null,
-    coefficient: 3,
-  );
+  final c = Term.constant(engine, 3);
 
-  final d = Term(
-    engine,
-    value: null,
-    coefficient: 4,
-  );
+  final d = Term.constant(engine, 4);
 
-  final e = Term(
-    engine,
-    value: 'x',
-    coefficient: 1,
-  );
+  final e = Term.variable(engine, 'x');
 
   var exp = Expression(
     engine,
