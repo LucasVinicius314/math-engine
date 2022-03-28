@@ -14,31 +14,82 @@ class Engine {
   }
 
   Term compute(Term a, Operation operation, Term b) {
+    final newA = a.calculate();
+    final newB = b.calculate();
+
     switch (operation) {
       case Operation.add:
-        return Term(
-          this,
-          value: null,
-          coefficient: a.coefficient + b.coefficient,
-        );
+        if (newA.value == newB.value) {
+          return Term(
+            this,
+            value: newA.value,
+            coefficient: newA.coefficient + newB.coefficient,
+          );
+        }
+
+        throw Exception('Not implemented.');
       case Operation.sub:
-        return Term(
-          this,
-          value: null,
-          coefficient: a.coefficient - b.coefficient,
-        );
+        if (newA.value == newB.value) {
+          return Term(
+            this,
+            value: newA.value,
+            coefficient: newA.coefficient - newB.coefficient,
+          );
+        }
+
+        throw Exception('Not implemented.');
       case Operation.mul:
-        return Term(
-          this,
-          value: null,
-          coefficient: a.coefficient * b.coefficient,
-        );
+        if (newA.value == null && newB.value == null) {
+          return Term(
+            this,
+            value: null,
+            coefficient: newA.coefficient * newB.coefficient,
+          );
+        }
+
+        if (newA.value == newB.value) {
+          return Term(
+            this,
+            value: '${newA.value}²',
+            coefficient: newA.coefficient * newB.coefficient,
+          );
+        }
+
+        if (newA.value != null && newB.value != null) {
+          return Term(
+            this,
+            value: '${newA.value}${newB.value}',
+            coefficient: newA.coefficient * newB.coefficient,
+          );
+        }
+
+        if (newA.value == null && newB.value != null) {
+          return Term(
+            this,
+            value: newB.value,
+            coefficient: newA.coefficient * newB.coefficient,
+          );
+        }
+
+        if (newA.value != null && newB.value == null) {
+          return Term(
+            this,
+            value: newA.value,
+            coefficient: newA.coefficient * newB.coefficient,
+          );
+        }
+
+        throw Exception('Not implemented.');
       case Operation.div:
-        return Term(
-          this,
-          value: null,
-          coefficient: a.coefficient / b.coefficient,
-        );
+        if (newA.value == null && newB.value == null) {
+          return Term(
+            this,
+            value: null,
+            coefficient: newA.coefficient / newB.coefficient,
+          );
+        }
+
+        throw Exception('Not implemented.');
     }
   }
 }

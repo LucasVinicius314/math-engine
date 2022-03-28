@@ -3,13 +3,11 @@ import 'engine.dart';
 class Term {
   final Engine engine;
 
-  // final Sign sign;
   final String? value;
   final double coefficient;
 
   Term(
     this.engine, {
-    // required this.sign,
     required this.value,
     required this.coefficient,
   });
@@ -56,6 +54,10 @@ class Term {
             .replaceFirst(RegExp(r'^-'), '');
 
     final newSign = coefficient == 0 ? '' : signToString[sign];
+
+    if (localCoefficient == '0') {
+      return localCoefficient;
+    }
 
     return '$newSign$localCoefficient$localValue';
   }

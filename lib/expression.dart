@@ -42,7 +42,7 @@ class Expression {
       } else {
         newTerms.add(value);
 
-        if (baseKey == terms.length - 1) {
+        if (baseKey * 2 == terms.length - 1) {
           final nextTerm = terms[baseKey];
 
           newTerms.add(nextTerm);
@@ -50,7 +50,13 @@ class Expression {
       }
     });
 
-    return Expression(engine, terms: newTerms);
+    final outExpression = Expression(engine, terms: newTerms);
+
+    if (outExpression.terms.length > 1) {
+      return outExpression.calculate();
+    }
+
+    return outExpression;
   }
 
   @override
