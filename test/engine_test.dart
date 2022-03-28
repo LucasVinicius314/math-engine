@@ -542,4 +542,21 @@ void main() {
       expect(expression.calculate().toString(), equals('16'));
     });
   });
+
+  group('Exponents', () {
+    test('2^(2) returns correctly', () {
+      final engine = Engine();
+
+      final a = Term(
+        engine,
+        value: null,
+        exponent: Term.constant(engine, 2),
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine, terms: [a]);
+
+      expect(expression.calculate().toString(), equals('2^(2)'));
+    });
+  });
 }

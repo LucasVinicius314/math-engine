@@ -63,6 +63,7 @@ class Term {
 
   @override
   String toString() {
+    final localExponent = exponent;
     final localValue = value ?? '';
     final localCoefficient =
         (localValue != '' && (coefficient == 1 || coefficient == -1)
@@ -76,6 +77,10 @@ class Term {
       return localCoefficient;
     }
 
-    return '$newSign$localCoefficient$localValue';
+    if (localExponent == null) {
+      return '$newSign$localCoefficient$localValue';
+    }
+
+    return '$newSign$localCoefficient$localValue^($localExponent)';
   }
 }
