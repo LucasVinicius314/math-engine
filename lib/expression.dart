@@ -55,8 +55,23 @@ class Expression {
       }
     });
 
-    final outExpression = Expression(engine, terms: newTerms);
+    final expandedTerms = terms
+        .map(
+          (element) => element is Expression ? element.terms : [element],
+        )
+        .expand((element) => element)
+        .toList();
 
+    final outExpression = Expression(engine, terms: expandedTerms);
+
+    final calculatedOutExpression = outExpression.calculate();
+
+    // TODO: fix, endless calculation loop
+    if (toString() == calculatedOutExpression.toString()) {
+      throw Exception('Endless loop');
+    }
+
+    // TODO: fix?
     if (outExpression.terms.length > 1) {
       return outExpression.calculate();
     }

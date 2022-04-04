@@ -550,7 +550,7 @@ void main() {
       final a = Term(
         engine,
         value: null,
-        exponent: Term.constant(engine, 2),
+        exponent: Expression.single(engine, Term.constant(engine, 2)),
         coefficient: 2,
       );
 
@@ -565,7 +565,7 @@ void main() {
       final a = Term(
         engine,
         value: null,
-        exponent: Term.variable(engine, 'x'),
+        exponent: Expression.single(engine, Term.variable(engine, 'x')),
         coefficient: 2,
       );
 
@@ -580,13 +580,38 @@ void main() {
       final a = Term(
         engine,
         value: null,
-        exponent: Term.variable(engine, 'x'),
+        exponent: Expression(engine, terms: [
+          Term.variable(engine, 'x'),
+          Operation.add,
+          Term.constant(engine, 1),
+        ]),
         coefficient: 2,
       );
 
       final expression = Expression(engine, terms: [a]);
 
       expect(expression.calculate().toString(), equals('2^(x + 1)'));
+    });
+
+    test('2^(x + 1), x = 4 returns correctly', () {
+      final engine = Engine();
+
+      engine.addToMap('x', 4);
+
+      final a = Term(
+        engine,
+        value: null,
+        exponent: Expression(engine, terms: [
+          Term.variable(engine, 'x'),
+          Operation.add,
+          Term.constant(engine, 1),
+        ]),
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine, terms: [a]);
+
+      expect(expression.calculate().toString(), equals('2^(5)'));
     });
   });
 }

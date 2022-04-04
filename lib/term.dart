@@ -1,10 +1,12 @@
+import 'package:math_engine/expression.dart';
+
 import 'engine.dart';
 
 class Term {
   final Engine engine;
 
   final String? value;
-  final Term? exponent;
+  final Expression? exponent;
   final double coefficient;
 
   Term(
@@ -34,7 +36,10 @@ class Term {
     print('calculating $this');
 
     final localValue = value;
+    final localExponent = exponent;
     final localCoefficient = coefficient;
+
+    final calculatedExponent = localExponent?.calculate();
 
     final engineValue = engine.resolveValue(localValue);
 
@@ -42,7 +47,7 @@ class Term {
       final out = Term(
         engine,
         value: null,
-        exponent: exponent,
+        exponent: calculatedExponent,
         coefficient: localCoefficient * engineValue,
       );
 
@@ -51,14 +56,21 @@ class Term {
       final out = Term(
         engine,
         value: engineValue,
-        exponent: exponent,
+        exponent: calculatedExponent,
         coefficient: localCoefficient,
       );
 
       return out;
     }
 
-    return this;
+    final out = Term(
+      engine,
+      value: value,
+      exponent: calculatedExponent,
+      coefficient: coefficient,
+    );
+
+    return out;
   }
 
   @override

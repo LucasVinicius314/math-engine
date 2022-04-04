@@ -1,3 +1,4 @@
+import 'package:math_engine/expression.dart';
 import 'package:math_engine/term.dart';
 
 class Engine {
@@ -13,7 +14,7 @@ class Engine {
     valueMap[key] = value;
   }
 
-  Term compute(Term a, Operation operation, Term b) {
+  Expression compute(Term a, Operation operation, Term b) {
     final newA = a.calculate();
     final newB = b.calculate();
 
@@ -28,81 +29,105 @@ class Engine {
     switch (operation) {
       case Operation.add:
         if (bothValuesEqual && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: newA.value,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient + newB.coefficient,
+            Term(
+              this,
+              value: newA.value,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient + newB.coefficient,
+            ),
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.sub:
         if (bothValuesEqual && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: newA.value,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient - newB.coefficient,
+            Term(
+              this,
+              value: newA.value,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient - newB.coefficient,
+            ),
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.mul:
         if (bothValuesNull && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: null,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient * newB.coefficient,
+            Term(
+              this,
+              value: null,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient * newB.coefficient,
+            ),
           );
         }
 
         if (bothValuesEqual && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            // TODO: fix, calculate new expression on exponent
-            value: '${newA.value}²',
-            exponent: newA.exponent,
-            coefficient: newA.coefficient * newB.coefficient,
+            Term(
+              this,
+              // TODO: fix, calculate new expression on exponent
+              value: '${newA.value}²',
+              exponent: newA.exponent,
+              coefficient: newA.coefficient * newB.coefficient,
+            ),
           );
         }
 
         if (bothValuesNotNull && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: '${newA.value}${newB.value}',
-            exponent: newA.exponent,
-            coefficient: newA.coefficient * newB.coefficient,
+            Term(
+              this,
+              value: '${newA.value}${newB.value}',
+              exponent: newA.exponent,
+              coefficient: newA.coefficient * newB.coefficient,
+            ),
           );
         }
 
         if (aNullBNotNullValues && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: newB.value,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient * newB.coefficient,
+            Term(
+              this,
+              value: newB.value,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient * newB.coefficient,
+            ),
           );
         }
 
         if (aNotNullBNullValues && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: newA.value,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient * newB.coefficient,
+            Term(
+              this,
+              value: newA.value,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient * newB.coefficient,
+            ),
           );
         }
 
         throw Exception('Not implemented.');
       case Operation.div:
         if (bothValuesNull && bothExponentsEqual) {
-          return Term(
+          return Expression.single(
             this,
-            value: null,
-            exponent: newA.exponent,
-            coefficient: newA.coefficient / newB.coefficient,
+            Term(
+              this,
+              value: null,
+              exponent: newA.exponent,
+              coefficient: newA.coefficient / newB.coefficient,
+            ),
           );
         }
 
