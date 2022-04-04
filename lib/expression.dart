@@ -1,3 +1,4 @@
+import 'package:math_engine/exceptions/not_simple_expression_exception.dart';
 import 'package:math_engine/term.dart';
 
 import 'engine.dart';
@@ -7,6 +8,8 @@ class Expression {
 
   final List<dynamic> terms;
 
+  bool get isSimple => terms.length == 1;
+
   Expression(
     this.engine, {
     required this.terms,
@@ -14,6 +17,8 @@ class Expression {
           terms.every((element) => element is Term || element is Operation),
           terms.length.isEven,
         );
+
+  Expression.single(Engine engine, Term term) : this(engine, terms: [term]);
 
   Expression calculate() {
     if (terms.length == 1) {
@@ -57,6 +62,14 @@ class Expression {
     }
 
     return outExpression;
+  }
+
+  Term toTerm() {
+    if (!isSimple) {
+      throw const NotSimpleExpressionException();
+    }
+
+    return terms[0];
   }
 
   @override

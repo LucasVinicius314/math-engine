@@ -558,5 +558,35 @@ void main() {
 
       expect(expression.calculate().toString(), equals('2^(2)'));
     });
+
+    test('2^(x) returns correctly', () {
+      final engine = Engine();
+
+      final a = Term(
+        engine,
+        value: null,
+        exponent: Term.variable(engine, 'x'),
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine, terms: [a]);
+
+      expect(expression.calculate().toString(), equals('2^(x)'));
+    });
+
+    test('2^(x + 1) returns correctly', () {
+      final engine = Engine();
+
+      final a = Term(
+        engine,
+        value: null,
+        exponent: Term.variable(engine, 'x'),
+        coefficient: 2,
+      );
+
+      final expression = Expression(engine, terms: [a]);
+
+      expect(expression.calculate().toString(), equals('2^(x + 1)'));
+    });
   });
 }
